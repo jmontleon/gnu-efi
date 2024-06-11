@@ -80,6 +80,10 @@ endif
 # on aarch64, avoid jump tables before all relocations have been processed
 reloc_aarch64.o: CFLAGS += -fno-jump-tables
 
+ifneq (,$(filter $(ARCH),aarch64 riscv64))
+CRT0_LOCAL_TARGET = crt0-efi-$(ARCH)-local.o
+endif
+
 TARGETS	= crt0-efi-$(ARCH).o libgnuefi.a
 
 all:	$(TARGETS) gnu-efi.pc
